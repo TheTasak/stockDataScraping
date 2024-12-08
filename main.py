@@ -162,10 +162,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser("BiznesRadar Scrapper")
     parser.add_argument("--type", help="Specify type of data which you want to scrap. Available options: price, financial", type=str)
     parser.add_argument("--stock", help="Specify stocks to scrap, delimited by a comma", type=str)
-    parser.add_argument("--max_iters", nargs="?", help="Maximum number of iterations when scrapping price", type=int, default=5)
-    parser.add_argument("--delay", nargs="?", help="Delay after making each web request (in milliseconds)", type=int, default=100)
-    parser.add_argument("--output", nargs="?", help="Output type. Available options: json, csv", type=str, default="json")
-    parser.add_argument("--period", nargs="?", help="Period type when scrapping financial data. Available options: Y, Q", type=str, default="Y")
+    parser.add_argument("--max_iters", nargs="?", help="Maximum number of iterations when scrapping price. Default: 5", type=int, default=5)
+    parser.add_argument("--delay", nargs="?", help="Delay after making each web request (in milliseconds). Default: 100", type=int, default=100)
+    parser.add_argument("--output", nargs="?", help="Output type. Available options: json, csv. Default: json", type=str, default="json")
+    parser.add_argument("--period", nargs="?", help="Period type when scrapping financial data. Available options: Y, Q. Default: Y", type=str, default="Y")
     args = parser.parse_args()
     if args.type == "financial" and args.stock is not None:
         for stock in args.stock.split(","):

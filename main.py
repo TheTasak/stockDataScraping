@@ -94,10 +94,10 @@ def transform_price_data(stock, iters, output):
         df.to_csv(f'{stock_dir}/{stock}_price.csv', index=False)
 
 
-def get_financial_data(data_type, stock, delay):
+def get_financial_data(data_type, stock, period, delay):
     stock_dir = f'{data_folder}/{stock}'
     handle_path(stock_dir)
-    url = f'https://www.biznesradar.pl/{data_type}/{stock}'
+    url = f'https://www.biznesradar.pl/{data_type}/{stock},{period}'
 
     webdata = req.get(url)
     if not webdata.ok:
@@ -165,12 +165,13 @@ if __name__ == "__main__":
     parser.add_argument("--max_iters", nargs="?", help="Maximum number of iterations when scrapping price", type=int, default=5)
     parser.add_argument("--delay", nargs="?", help="Delay after making each web request (in milliseconds)", type=int, default=100)
     parser.add_argument("--output", nargs="?", help="Output type. Available options: json, csv", type=str, default="json")
+    parser.add_argument("--period", nargs="?", help="Period type when scrapping financial data. Available options: Y, Q", type=str, default="Y")
     args = parser.parse_args()
     if args.type == "financial" and args.stock is not None:
         for stock in args.stock.split(","):
             stock = stock.strip()
             for data_type in types:
-              get_financial_data(data_type, stock, args.delay)
+              get_financial_data(data_type, stock, args.period, args.delay)
               transform_financial_data(data_type, stock, args.output)
     elif args.type == "price" and args.stock is not None:
         for stock in args.stock.split(","):
